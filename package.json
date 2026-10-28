@@ -1,11 +1,11 @@
 {
   "name": "@convex-dev/r2",
   "description": "A R2 component for Convex.",
-  "repository": "github:get-convex/r2",
-  "homepage": "https://github.com/get-convex/r2#readme",
+  "repository": "github:convex/r2",
+  "homepage": "https://github.com/convex/r2#readme",
   "bugs": {
     "email": "support@convex.dev",
-    "url": "https://github.com/get-convex/r2/issues"
+    "url": "https://github.com/convex/r2/issues"
   },
   "version": "0.10.4",
   "license": "Apache-2.0",
