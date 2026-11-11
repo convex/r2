@@ -1,11 +1,11 @@
 {
   "name": "@convex-dev/r2",
   "description": "A R2 component for Convex.",
-  "repository": "github:get-convex/r2",
-  "homepage": "https://github.com/get-convex/r2#readme",
+  "repository": "github:convex/r2",
+  "homepage": "https://github.com/convex/r2#readme",
   "bugs": {
     "email": "support@convex.dev",
-    "url": "https://github.com/get-convex/r2/issues"
+    "url": "https://github.com/convex/r2/issues"
   },
   "version": "0.10.4",
   "license": "Apache-2.0",
@@ -19,20 +19,19 @@
     "dev:frontend": "cd example && vite --clearScreen false",
     "dev:build": "chokidar 'tsconfig*.json' 'src/**/*.ts' -i '**/*.test.ts' -c 'npm run build:codegen' --initial",
     "predev": "convex init && npm run build:codegen",
+    "prepack": "npm run build",
     "build": "tsc --project ./tsconfig.build.json",
     "build:codegen": "npx convex codegen --component-dir ./src/component && npm run build",
     "build:clean": "rm -rf dist *.tsbuildinfo && npm run build:codegen",
     "typecheck": "tsc --noEmit && tsc -p example && tsc -p example/convex",
-    "lint": "eslint .",
+    "lint": "eslint . && prettier --check .",
     "test": "vitest run --typecheck",
+    "check": "npm run test && npm run typecheck && npm run lint",
+    "test:e2e": "convex init && npm run build:codegen && convex dev --once --typecheck-components",
+    "format": "prettier --write .",
     "test:watch": "vitest --typecheck --clearScreen false",
     "test:debug": "vitest --inspect-brk --no-file-parallelism",
-    "test:coverage": "vitest run --coverage --coverage.reporter=text",
-    "preversion": "npm ci && npm run build:clean && npm run test && npm run lint && npm run typecheck",
-    "alpha": "npm version prerelease --preid alpha && npm publish --tag alpha && git push --follow-tags",
-    "release": "npm version patch && npm publish && git push --follow-tags",
-    "release:minor": "npm version minor && npm publish && git push --follow-tags",
-    "version": "(npm whoami || npm login) && vim -c 'normal o' -c 'normal o## '$npm_package_version CHANGELOG.md && prettier -w CHANGELOG.md && git add CHANGELOG.md"
+    "test:coverage": "vitest run --coverage --coverage.reporter=text"
   },
   "files": [
     "dist",
@@ -100,6 +99,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
+    "@changesets/cli": "3.0.3",
     "@convex-dev/eslint-plugin": "2.0.0",
     "@edge-runtime/vm": "5.0.0",
     "@eslint/eslintrc": "3.3.5",

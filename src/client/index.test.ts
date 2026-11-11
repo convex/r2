@@ -92,10 +92,13 @@ describe("R2 client Blob upload", () => {
     });
 
     const sentinel = new Error("reached-transport");
-    client.middlewareStack.add((_next) => async () => Promise.reject(sentinel), {
-      step: "finalizeRequest",
-      priority: "low",
-    });
+    client.middlewareStack.add(
+      (_next) => async () => Promise.reject(sentinel),
+      {
+        step: "finalizeRequest",
+        priority: "low",
+      },
+    );
 
     const blob = new Blob([new Uint8Array([1, 2, 3, 4, 5])], {
       type: "application/octet-stream",

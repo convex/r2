@@ -94,9 +94,9 @@ npx convex env set R2_ENDPOINT xxxxx
 npx convex env set R2_BUCKET xxxxx
 ```
 
-Note: Environment variables are only needed if you don't pass config directly
-to the `R2` constructor. You can also pass individual values to override
-specific environment variables.
+Note: Environment variables are only needed if you don't pass config directly to
+the `R2` constructor. You can also pass individual values to override specific
+environment variables.
 
 ### Using multiple buckets
 
@@ -119,8 +119,8 @@ const archive = new R2(components.r2, {
 });
 ```
 
-Each instance maintains its own config and S3 client. Metadata from all
-buckets coexists in the same Convex table, indexed by bucket name.
+Each instance maintains its own config and S3 client. Metadata from all buckets
+coexists in the same Convex table, indexed by bucket name.
 
 ## Uploading files
 
@@ -131,7 +131,10 @@ for React and Svelte that handle the entire upload process:
 - uploads the file to R2
 - stores the file's metadata in your Convex database
 
-**Important**: For proper TypeScript typing in your callbacks, pass your `DataModel` type as a generic parameter to `r2.clientApi<DataModel>()`. This ensures that `ctx` parameters are properly typed with your database schema, and queries return `Doc<"tableName">` instead of `GenericDocument`.
+**Important**: For proper TypeScript typing in your callbacks, pass your
+`DataModel` type as a generic parameter to `r2.clientApi<DataModel>()`. This
+ensures that `ctx` parameters are properly typed with your database schema, and
+queries return `Doc<"tableName">` instead of `GenericDocument`.
 
 1. Instantiate a R2 component client in a file in your app's `convex/` folder:
 
@@ -377,13 +380,18 @@ function Image({ message }: { message: { url: string } }) {
 route directly to R2's S3 API endpoint, bypassing Cloudflare's edge cache. For
 use cases where you need permanent, CDN-cached URLs (profile pictures, avatars,
 public assets), you can connect a custom domain to your R2 bucket and build the
-URL directly from the object key (eg., cdn.example.com, where example.com is a domain you own).
+URL directly from the object key (eg., cdn.example.com, where example.com is a
+domain you own).
 
 ### Set up an R2 custom domain
 
-You'll first need to connect a custom domain to your R2 bucket - [follow their docs](https://developers.cloudflare.com/rules/origin-rules/tutorials/point-to-r2-bucket-with-custom-domain/) to get started.
+You'll first need to connect a custom domain to your R2 bucket -
+[follow their docs](https://developers.cloudflare.com/rules/origin-rules/tutorials/point-to-r2-bucket-with-custom-domain/)
+to get started.
 
-Cloudflare caches the most common file types automatically. They provide a complete list as well as info on how to enable caching for less common types [in their docs](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions).
+Cloudflare caches the most common file types automatically. They provide a
+complete list as well as info on how to enable caching for less common types
+[in their docs](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions).
 
 ### Build a CDN URL from an object key
 
@@ -415,7 +423,8 @@ export const listMessages = query({
 });
 ```
 
-> **Note:** Don't use the `r2.dev` public development URL in production - it's rate limited and uncached. Use a custom domain instead.
+> **Note:** Don't use the `r2.dev` public development URL in production - it's
+> rate limited and uncached. Use a custom domain instead.
 
 ## Deleting Files
 
@@ -528,8 +537,8 @@ export const r2 = new R2(components.r2);
 
 const callbacks: R2Callbacks = internal.example;
 
-export const { generateUploadUrl, syncMetadata, onSyncMetadata } = r2.clientApi<DataModel>(
-  {
+export const { generateUploadUrl, syncMetadata, onSyncMetadata } =
+  r2.clientApi<DataModel>({
     // Pass the functions from this file back into the component.
     // Technically only an object with `onSyncMetadata` is required, the recommended
     // pattern is just for convenience.
@@ -543,8 +552,7 @@ export const { generateUploadUrl, syncMetadata, onSyncMetadata } = r2.clientApi<
       // log metadata of synced object
       console.log("metadata", metadata);
     },
-  },
-);
+  });
 ```
 
 <!-- END: Include on https://convex.dev/components -->
