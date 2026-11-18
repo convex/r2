@@ -244,6 +244,27 @@ queries return `Doc<"tableName">` instead of `GenericDocument`.
     </form>
    ```
 
+   Other frameworks:
+
+   ```ts
+   import { ConvexClient } from "convex/browser";
+   import { uploadWithProgress } from "@convex-dev/r2/browser";
+   import { api } from "../convex/_generated/api";
+
+   const convex = new ConvexClient(import.meta.env.VITE_CONVEX_URL);
+
+   // The steps that `useUploadFile` runs.
+   async function uploadFile(file: File) {
+     const { url, key } = await convex.mutation(
+       api.example.generateUploadUrl,
+       {},
+     );
+     await uploadWithProgress(url, file);
+     await convex.mutation(api.example.syncMetadata, { key });
+     return key;
+   }
+   ```
+
 ### Using a custom object key
 
 The `r2.generateUploadUrl` function generates a uuid to use as the object key by
