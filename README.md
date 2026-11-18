@@ -51,8 +51,7 @@ const response = await fetch(url);
   - Under **Specify bucket**, select the bucket you created above
   - Optionally change TTL
   - Click **Create API Token**
-- On the next screen you'll be provided with four values that you'll need later:
-  - **Token Value**: `R2_TOKEN`
+- On the next screen, record these values for the component's S3 API access:
   - **Access Key ID**: `R2_ACCESS_KEY_ID`
   - **Secret Access Key**: `R2_SECRET_ACCESS_KEY`
   - **Endpoint**: `R2_ENDPOINT`
@@ -87,7 +86,6 @@ export default app;
 Set your API credentials using the values you recorded earlier:
 
 ```sh
-npx convex env set R2_TOKEN xxxxx
 npx convex env set R2_ACCESS_KEY_ID xxxxx
 npx convex env set R2_SECRET_ACCESS_KEY xxxxx
 npx convex env set R2_ENDPOINT xxxxx
@@ -258,11 +256,12 @@ the `r2` instance.
 // convex/example.ts
 import { R2 } from "@convex-dev/r2";
 import { components } from "./_generated/api";
+import { mutation } from "./_generated/server";
 
 export const r2 = new R2(components.r2);
 
-// A custom mutation that creates a key from the user id and a uuid. If the key
-// already exists, the mutation will fail.
+// A custom mutation that creates a key from the user id and a uuid.
+// Key uniqueness is not checked: uploading to an existing key overwrites the object.
 export const generateUploadUrlWithCustomKey = mutation({
   args: {},
   handler: async (ctx) => {
@@ -286,6 +285,7 @@ the server side.
 ```ts
 // convex/example.ts
 import { internalAction } from "./_generated/server";
+import { components, internal } from "./_generated/api";
 import { R2 } from "@convex-dev/r2";
 
 const r2 = new R2(components.r2);
@@ -406,8 +406,8 @@ const r2 = new R2(components.r2);
 // Build CDN URL from a stored object key.
 function getCdnUrl(key: string): string {
   // Replace with your domain
-  const base = "cdn.example.com"
-  return `${base}/${key.split('/').map(encodeURIComponent).join('/')`
+  const base = "https://cdn.example.com";
+  return `${base}/${key.split("/").map(encodeURIComponent).join("/")}`;
 }
 
 export const listMessages = query({
@@ -530,7 +530,7 @@ access the metadata of the newly uploaded file.
 ```ts
 // convex/example.ts
 import { R2, type R2Callbacks } from "@convex-dev/r2";
-import { components } from "./_generated/api";
+import { components, internal } from "./_generated/api";
 import type { DataModel } from "./_generated/dataModel";
 
 export const r2 = new R2(components.r2);
