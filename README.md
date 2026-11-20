@@ -251,6 +251,7 @@ queries return `Doc<"tableName">` instead of `GenericDocument`.
    import { uploadWithProgress } from "@convex-dev/r2/browser";
    import { api } from "../convex/_generated/api";
 
+   // Read the deployment URL the way your framework exposes it.
    const convex = new ConvexClient(import.meta.env.VITE_CONVEX_URL);
 
    // The steps that `useUploadFile` runs.
