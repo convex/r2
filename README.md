@@ -247,15 +247,12 @@ queries return `Doc<"tableName">` instead of `GenericDocument`.
    Other frameworks:
 
    ```ts
-   import { ConvexClient } from "convex/browser";
+   import type { ConvexClient } from "convex/browser";
    import { uploadWithProgress } from "@convex-dev/r2/browser";
    import { api } from "../convex/_generated/api";
 
-   // Read the deployment URL the way your framework exposes it.
-   const convex = new ConvexClient(import.meta.env.VITE_CONVEX_URL);
-
-   // The steps that `useUploadFile` runs.
-   async function uploadFile(file: File) {
+   // The steps that `useUploadFile` runs, on your app's `ConvexClient`.
+   async function uploadFile(convex: ConvexClient, file: File) {
      const { url, key } = await convex.mutation(
        api.example.generateUploadUrl,
        {},
