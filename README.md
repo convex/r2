@@ -259,7 +259,9 @@ queries return `Doc<"tableName">` instead of `GenericDocument`.
        api.example.generateUploadUrl,
        {},
      );
-     await uploadWithProgress(url, file);
+     await uploadWithProgress(url, file, ({ loaded, total }) => {
+       console.log(`Uploaded ${loaded} of ${total} bytes`);
+     });
      await convex.mutation(api.example.syncMetadata, { key });
      return key;
    }
