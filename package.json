@@ -55,6 +55,10 @@
       "types": "./dist/vue/index.d.ts",
       "default": "./dist/vue/index.js"
     },
+    "./browser": {
+      "types": "./dist/browser/index.d.ts",
+      "default": "./dist/browser/index.js"
+    },
     "./test": "./src/test.ts",
     "./_generated/component.js": {
       "types": "./dist/component/_generated/component.d.ts"
