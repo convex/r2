@@ -1,10 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:best-practices"],
-  "schedule": ["* * * * 1-5"],
   "timezone": "America/Los_Angeles",
   "minimumReleaseAge": "14 days",
+  "lockFileMaintenance": {
+    "schedule": ["at any time"],
+    "minimumReleaseAge": null
+  },
   "packageRules": [
+    {
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "minimumReleaseAge": "14 days"
+    },
     {
       "groupName": "Routine updates",
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
@@ -15,7 +23,25 @@
       "automerge": false
     },
     {
+      "description": "Only automerge dev majors exercised by the required Test and lint check",
+      "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["major"],
+      "matchPackageNames": [
+        "@convex-dev/eslint-plugin",
+        "@edge-runtime/vm",
+        "@eslint/js",
+        "@types/node",
+        "convex-test",
+        "eslint",
+        "eslint-plugin-react-hooks",
+        "eslint-plugin-react-refresh",
+        "globals",
+        "prettier",
+        "typescript",
+        "typescript-eslint",
+        "vitest"
+      ],
       "automerge": true
     },
     {
@@ -25,6 +51,6 @@
     }
   ],
   "constraints": {
-    "npm": "^11.0.0"
+    "npm": "^11.10.0"
   }
 }
